@@ -39,7 +39,8 @@ internal static class Program
     [STAThread]
     private static int Main(string[] args)
     {
-        Console.OutputEncoding = System.Text.Encoding.UTF8;
+        // WinExe 无控制台时 Console 句柄无效，设置编码会抛异常，忽略即可
+        try { Console.OutputEncoding = System.Text.Encoding.UTF8; } catch { }
         var arg = args.Length == 0 ? "" : args[0].ToLowerInvariant();
         var isCliMode = arg is "--status" or "--install" or "--uninstall" or "--reload" or "--dry-run";
 
