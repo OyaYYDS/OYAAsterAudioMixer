@@ -5,13 +5,13 @@
         Closing="Window_Closing">
     <DockPanel>
         <Border DockPanel.Dock="Top" Padding="10,6" Background="#F2F2F2">
-            <DockPanel>
-                <TextBlock x:Name="HeaderText" Text="..." VerticalAlignment="Center" FontSize="13"/>
-                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
-                    <Button x:Name="LogsButton" Content="日志" Padding="10,2" Margin="4,0,0,0" Click="LogsButton_Click"/>
-                    <Button x:Name="SettingsButton" Content="设置" Padding="10,2" Margin="4,0,0,0" Click="SettingsButton_Click"/>
-                </StackPanel>
-            </DockPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="LogsButton" Content="日志" Padding="10,2" Margin="4,0,0,0" Click="LogsButton_Click"/>
+                <Button x:Name="SettingsButton" Content="设置" Padding="10,2" Margin="4,0,0,0" Click="SettingsButton_Click"/>
+            </StackPanel>
+        </Border>
+        <Border DockPanel.Dock="Bottom" Padding="10,4" Background="#F2F2F2">
+            <TextBlock x:Name="HeaderText" Text="..." FontSize="12" TextTrimming="CharacterEllipsis" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}"/>
         </Border>
         <TextBlock x:Name="EmptyHint" Text="当前没有出声的应用（打开任意会发声的程序）"
                    Foreground="Gray" HorizontalAlignment="Center" Margin="0,24,0,0"/>
