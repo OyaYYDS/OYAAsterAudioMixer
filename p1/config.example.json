@@ -1,0 +1,20 @@
+[
+  {
+    "user": "Alice",
+    "playback": "扬声器 (High Definition Audio Device)",
+    "capture": "",
+    "exclude": ["voicemeeter8"]
+  },
+  {
+    "user": "Bob",
+    "playback": "Voicemeeter AUX Input",
+    "capture": "Voicemeeter Out B3",
+    "exclude": ["voicemeeter8"]
+  },
+  {
+    "user": "*",
+    "playback": "",
+    "capture": "",
+    "exclude": []
+  }
+]

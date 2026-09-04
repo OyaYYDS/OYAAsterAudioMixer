@@ -1,0 +1,96 @@
+<Window x:Class="AsterAudioRouter.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="设置 — ASTER 音量合成器" Height="560" Width="680">
+    <TabControl Margin="8">
+        <TabItem Header="路由规则">
+            <DockPanel Margin="8">
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,8,0,0">
+                    <Button x:Name="AddRuleButton" Content="添加规则" Click="AddRuleButton_Click" Padding="10,3"/>
+                    <Button x:Name="SaveRulesButton" Content="保存规则（自动热重载）" Click="SaveRulesButton_Click" Padding="10,3" Margin="8,0,0,0"/>
+                    <TextBlock x:Name="ConfigPathText" Text="" Margin="12,0,0,0" VerticalAlignment="Center" Foreground="Gray" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <Grid Margin="4,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="110"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="26"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="用户账户" FontWeight="Bold"/>
+                            <TextBlock Grid.Column="1" Text="扬声器（留空=不路由）" FontWeight="Bold"/>
+                            <TextBlock Grid.Column="2" Text="麦克风（留空=不路由）" FontWeight="Bold"/>
+                            <TextBlock Grid.Column="3" Text="排除进程（逗号分隔，支持 *）" FontWeight="Bold"/>
+                        </Grid>
+                        <ItemsControl x:Name="RulesList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="4,2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="110"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="150"/>
+                                            <ColumnDefinition Width="26"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox Grid.Column="0" Text="{Binding User, UpdateSourceTrigger=PropertyChanged}" Margin="2" VerticalContentAlignment="Center"/>
+                                        <ComboBox Grid.Column="1" IsEditable="True" Text="{Binding Playback, UpdateSourceTrigger=LostFocus}"
+                                                  ItemsSource="{Binding DataContext.PlaybackDevices, RelativeSource={RelativeSource AncestorType=Window}}" Margin="2"/>
+                                        <ComboBox Grid.Column="2" IsEditable="True" Text="{Binding Capture, UpdateSourceTrigger=LostFocus}"
+                                                  ItemsSource="{Binding DataContext.CaptureDevices, RelativeSource={RelativeSource AncestorType=Window}}" Margin="2"/>
+                                        <TextBox Grid.Column="3" Text="{Binding ExcludeText, UpdateSourceTrigger=LostFocus}" Margin="2" VerticalContentAlignment="Center"/>
+                                        <Button Grid.Column="4" Content="✕" Click="DeleteRule_Click" Margin="2" ToolTip="删除此规则"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
+            </DockPanel>
+        </TabItem>
+        <TabItem Header="手动覆盖">
+            <DockPanel Margin="8">
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,8">
+                    <TextBlock Text="在合成器里手动改过设备的程序（点“恢复自动”后由 agent 接管）" Foreground="Gray" VerticalAlignment="Center"/>
+                </StackPanel>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl x:Name="OverridesList">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="4,3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="90"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{Binding Exe}" VerticalAlignment="Center" FontWeight="Bold"/>
+                                    <TextBlock Grid.Column="1" VerticalAlignment="Center" Foreground="Gray">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}播放: {0}    录音: {1}">
+                                                <Binding Path="PlaybackDisplay"/>
+                                                <Binding Path="CaptureDisplay"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                    <Button Grid.Column="2" Content="恢复自动" Click="DeleteOverride_Click" Margin="2"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </DockPanel>
+        </TabItem>
+        <TabItem Header="其他">
+            <StackPanel Margin="12" MaxWidth="460" HorizontalAlignment="Left">
+                <CheckBox x:Name="AutostartCheck" Content="本座位开机自启（登录后自动后台路由）" FontSize="13"
+                          Checked="Autostart_Changed" Unchecked="Autostart_Changed" Margin="0,4"/>
+                <TextBlock Text="每个座位各自勾选，互不影响。" Foreground="Gray" Margin="22,0,0,0"/>
+                <Separator Margin="0,14"/>
+                <Button x:Name="OpenLogsButton" Content="打开日志文件夹" Click="OpenLogs_Click" Padding="10,3" HorizontalAlignment="Left"/>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
+</Window>

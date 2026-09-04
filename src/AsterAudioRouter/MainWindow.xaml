@@ -1,0 +1,57 @@
+<Window x:Class="AsterAudioRouter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ASTER 音量合成器" Height="560" Width="780"
+        Closing="Window_Closing">
+    <DockPanel>
+        <Border DockPanel.Dock="Top" Padding="10,6" Background="#F2F2F2">
+            <DockPanel>
+                <TextBlock x:Name="HeaderText" Text="..." VerticalAlignment="Center" FontSize="13"/>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                    <Button x:Name="LogsButton" Content="日志" Padding="10,2" Margin="4,0,0,0" Click="LogsButton_Click"/>
+                    <Button x:Name="SettingsButton" Content="设置" Padding="10,2" Margin="4,0,0,0" Click="SettingsButton_Click"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+        <TextBlock x:Name="EmptyHint" Text="当前没有出声的应用（打开任意会发声的程序）"
+                   Foreground="Gray" HorizontalAlignment="Center" Margin="0,24,0,0"/>
+        <ListBox x:Name="SessionList" HorizontalContentAlignment="Stretch"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="6,4">
+                        <Grid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="加入黑名单（停止自动路由它）" Click="AddBlacklist_Click"/>
+                            </ContextMenu>
+                        </Grid.ContextMenu>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="26"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="48"/>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="160"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="{Binding Icon}" Width="18" Height="18" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis"
+                                   VerticalAlignment="Center" FontSize="13" ToolTip="{Binding ExeName}"/>
+                        <Slider Grid.Column="2" Value="{Binding Volume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Minimum="0" Maximum="1" VerticalAlignment="Center" Margin="6,0"
+                                Thumb.DragStarted="Slider_DragStarted" Thumb.DragCompleted="Slider_DragCompleted"/>
+                        <CheckBox Grid.Column="3" Content="静音" VerticalAlignment="Center"
+                                  IsChecked="{Binding Muted, Mode=OneWay}" Click="Mute_Click"/>
+                        <ComboBox Grid.Column="4" ItemsSource="{Binding DeviceChoices}"
+                                  SelectedItem="{Binding DeviceSelection, Mode=TwoWay}"
+                                  VerticalAlignment="Center" Margin="6,0" ToolTip="扬声器（播放设备）"
+                                  SelectionChanged="Device_SelectionChanged"/>
+                        <ComboBox Grid.Column="5" ItemsSource="{Binding CaptureChoices}"
+                                  SelectedItem="{Binding CaptureSelection, Mode=TwoWay}"
+                                  VerticalAlignment="Center" Margin="6,0" ToolTip="麦克风（录音设备）"
+                                  SelectionChanged="Capture_SelectionChanged"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </DockPanel>
+</Window>
