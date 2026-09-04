@@ -27,24 +27,33 @@ internal static class Program
     private static extern bool SetConsoleOutputCP(uint codePageId);
 
     [DllImport("kernel32.dll")]
-    private static extern IntPtr GetConsoleWindow();
+    private static extern bool AttachConsole(uint dwProcessId);
 
-    [DllImport("user32.dll")]
-    private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+    [DllImport("kernel32.dll")]
+    private static extern bool AllocConsole();
 
-    private const int SW_HIDE = 0;
+    private const uint ATTACH_PARENT_PROCESS = 0xFFFFFFFF;
 
     // 注意：不能使用 async Main —— .NET 的 async Main 不认 [STAThread]（线程池执行导致
     // WPF 报 "The calling thread must be STA"）。Main 保持同步，agent 模式内部阻塞等待。
     [STAThread]
     private static int Main(string[] args)
     {
-        SetConsoleOutputCP(65001);
         Console.OutputEncoding = System.Text.Encoding.UTF8;
+        var arg = args.Length == 0 ? "" : args[0].ToLowerInvariant();
+        var isCliMode = arg is "--status" or "--install" or "--uninstall" or "--reload" or "--dry-run";
+
+        // WinExe 子系统默认无控制台（GUI/--agent 双击零黑窗）；
+        // CLI 模式先挂接父进程控制台（cmd 里运行），挂不上（资源管理器启动）再自建一个
+        if (isCliMode)
+        {
+            if (!AttachConsole(ATTACH_PARENT_PROCESS))
+                AllocConsole();
+            try { SetConsoleOutputCP(65001); } catch { }
+        }
+
         var exeDir = AppContext.BaseDirectory;
         AgentLogger.Init(Path.Combine(exeDir, "p1logs"), consoleEnabled: true);
-
-        var arg = args.Length == 0 ? "" : args[0].ToLowerInvariant();
 
         // 长驻模式（GUI / --agent）：按会话单实例互斥
         if (arg is "" or "--agent")
@@ -62,7 +71,6 @@ internal static class Program
 
             if (arg == "--agent")
             {
-                ShowWindow(GetConsoleWindow(), SW_HIDE);
                 return RunAgentModeAsync(exeDir, dryRun: false).GetAwaiter().GetResult();
             }
             return RunGuiMode(exeDir);
@@ -117,8 +125,6 @@ internal static class Program
     // 注意：必须在 STA/UI 线程上完整执行（WPF 对象与 DispatcherTimer），内部不用 await
     private static int RunGuiMode(string exeDir)
     {
-        ShowWindow(GetConsoleWindow(), SW_HIDE);
-
         var overrides = new OverridesStore();
         using var cts = new CancellationTokenSource();
         using var agent = new Agent(exeDir, dryRun: false, overrides);
