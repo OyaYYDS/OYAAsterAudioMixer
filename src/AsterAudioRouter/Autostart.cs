@@ -8,7 +8,8 @@ namespace AsterAudioRouter;
 public static class Autostart
 {
     private const string RunKeyPath = @"Software\Microsoft\Windows\CurrentVersion\Run";
-    private const string ValueName = "AsterAudioRouter";
+    private const string ValueName = "OYAAsterAudioMixer";
+    private const string LegacyValueName = "AsterAudioRouter"; // 旧版遗留值，安装时顺手清理
 
     public static void Install()
     {
@@ -21,6 +22,7 @@ public static class Autostart
         var command = $"\"{exe}\" --agent";
         using var key = Registry.CurrentUser.CreateSubKey(RunKeyPath);
         key.SetValue(ValueName, command);
+        try { key.DeleteValue(LegacyValueName, false); } catch { /* 无遗留值则忽略 */ }
         AgentLogger.Log($"已写入当前用户登录自启: {command}");
     }
 

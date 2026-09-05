@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>AsterAudioRouter</RootNamespace>
-    <AssemblyName>AsterAudioRouter</AssemblyName>
+    <AssemblyName>OYAAsterAudioMixer</AssemblyName>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <EnableDefaultApplicationDefinition>false</EnableDefaultApplicationDefinition>

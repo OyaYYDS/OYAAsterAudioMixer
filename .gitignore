@@ -15,11 +15,11 @@ p0/AsterAudioP0.dll
 p0/AsterAudioP0.pdb
 p0/AsterAudioP0.deps.json
 p0/AsterAudioP0.runtimeconfig.json
-p1/AsterAudioRouter.exe
-p1/AsterAudioRouter.dll
-p1/AsterAudioRouter.pdb
-p1/AsterAudioRouter.deps.json
-p1/AsterAudioRouter.runtimeconfig.json
+p1/OYAAsterAudioMixer.exe
+p1/OYAAsterAudioMixer.dll
+p1/OYAAsterAudioMixer.pdb
+p1/OYAAsterAudioMixer.deps.json
+p1/OYAAsterAudioMixer.runtimeconfig.json
 p1/icon.ico
 
 # 本地配置（含用户名/设备等个人信息）

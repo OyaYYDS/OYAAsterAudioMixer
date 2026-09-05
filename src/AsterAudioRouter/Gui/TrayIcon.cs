@@ -33,7 +33,7 @@ public sealed class TrayIcon : IDisposable
 
         _notifyIcon = new NotifyIcon
         {
-            Text = "ASTER 音量合成器",
+            Text = "OYA ASTER 音量合成器",
             Icon = _iconResource ?? SystemIcons.Application,
             ContextMenuStrip = menu,
             Visible = true

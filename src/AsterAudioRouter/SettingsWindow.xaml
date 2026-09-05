@@ -1,7 +1,7 @@
 <Window x:Class="AsterAudioRouter.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="设置 — ASTER 音量合成器" Height="560" Width="680">
+        Title="设置 — OYA ASTER 音量合成器" Height="560" Width="680">
     <TabControl Margin="8">
         <TabItem Header="路由规则">
             <DockPanel Margin="8">

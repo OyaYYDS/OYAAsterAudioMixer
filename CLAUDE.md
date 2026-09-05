@@ -27,7 +27,7 @@
 
 ## 常用命令
 
-- 构建/发布：`dotnet publish -c Release -o <项目根>\p1`（发布前先 `taskkill //F //IM AsterAudioRouter.exe` 停实例）
+- 构建/发布：`dotnet publish -c Release -o <项目根>\p1`（发布前先 `taskkill //F //IM OYAAsterAudioMixer.exe` 停实例）
 - GUI：双击 `p1\AsterAudioRouter.exe`；后台：`--agent`；CLI：`--status/--install/--uninstall/--reload/--dry-run`
 - 热重载：改 `p1\config.json` 保存即生效；手动覆盖在 `%AppData%\AsterAudioRouter\overrides.json`
 - 日志：`p1\p1logs\`；诊断音量问题看"音量操作/静音操作"行（会话数/设置/回读）

@@ -1,5 +1,5 @@
 @echo off
 chcp 65001 >nul
 cd /d "%~dp0"
-taskkill /F /IM AsterAudioRouter.exe
+taskkill /F /IM OYAAsterAudioMixer.exe
 pause

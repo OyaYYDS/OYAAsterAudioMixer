@@ -59,14 +59,14 @@ internal static class Program
         // 长驻模式（GUI / --agent）：按会话单实例互斥
         if (arg is "" or "--agent")
         {
-            var mutexName = $"AsterAudioRouter_S{Process.GetCurrentProcess().SessionId}";
+            var mutexName = $"OYAAsterAudioMixer_S{Process.GetCurrentProcess().SessionId}";
             using var mutex = new Mutex(true, mutexName, out var createdNew);
             if (!createdNew)
             {
                 if (arg == "")
                     System.Windows.Forms.MessageBox.Show(
-                        "本座位已有 ASTER 音量合成器在运行。\n（若在后台运行，可到托盘或任务管理器操作）",
-                        "ASTER 音量合成器");
+                        "本座位已有 OYA ASTER 音量合成器在运行。\n（若在后台运行，可到托盘或任务管理器操作）",
+                        "OYA ASTER 音量合成器");
                 return 0;
             }
 
@@ -94,7 +94,7 @@ internal static class Program
             case "--reload":
                 try
                 {
-                    using var ev = EventWaitHandle.OpenExisting("AsterAudioRouterReload");
+                    using var ev = EventWaitHandle.OpenExisting("OYAAsterAudioMixerReload");
                     ev.Set();
                     Console.WriteLine("已通知 agent 重新加载配置");
                 }
@@ -197,16 +197,16 @@ internal static class Program
     private static void PrintUsage()
     {
         Console.WriteLine("""
-            AsterAudioRouter — ASTER 按用户音频自动路由 + 音量合成器（P2）
+            OYAAsterAudioMixer — OYA ASTER 按用户音频自动路由 + 音量合成器
 
             用法:
               （无参数）              = 打开音量合成器（托盘 + 窗口，内置自动路由）
-              AsterAudioRouter.exe --agent      后台运行（每座位登录自启）
-              AsterAudioRouter.exe --dry-run    试运行：只记录将执行的路由，不真正调用
-              AsterAudioRouter.exe --status     查看配置/匹配规则/有音频会话的进程
-              AsterAudioRouter.exe --install    写入当前用户登录自启（HKCU Run）
-              AsterAudioRouter.exe --uninstall  移除当前用户登录自启
-              AsterAudioRouter.exe --reload     通知运行中的 agent 重新加载配置
+              OYAAsterAudioMixer.exe --agent      后台运行（每座位登录自启）
+              OYAAsterAudioMixer.exe --dry-run    试运行：只记录将执行的路由，不真正调用
+              OYAAsterAudioMixer.exe --status     查看配置/匹配规则/有音频会话的进程
+              OYAAsterAudioMixer.exe --install    写入当前用户登录自启（HKCU Run）
+              OYAAsterAudioMixer.exe --uninstall  移除当前用户登录自启
+              OYAAsterAudioMixer.exe --reload     通知运行中的 agent 重新加载配置
 
             配置: exe 同目录 config.json（优先）或 %ProgramData%\AsterAudioRouter\config.json
             手动覆盖: %AppData%\AsterAudioRouter\overrides.json

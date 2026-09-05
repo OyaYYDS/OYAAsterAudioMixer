@@ -1,4 +1,4 @@
-# ASTER 音量合成器（AsterAudioMixer）
+# OYA ASTER 音量合成器（OYAAsterAudioMixer）
 
 面向 **ASTER 一拖二/多座位 Windows 主机**的音量合成器 + 按用户自动音频路由。
 
@@ -22,18 +22,18 @@
    dotnet publish src/AsterAudioRouter -c Release -o p1
    ```
 2. 在 `p1\` 放 `config.json`（参考 `p1\config.example.json`），配置 用户 → 扬声器/麦克风/排除名单
-3. 两个座位各自双击 `p1\AsterAudioRouter.exe`（GUI + 自动路由一体），或 `--agent` 纯后台
+3. 两个座位各自双击 `p1\OYAAsterAudioMixer.exe`（GUI + 自动路由一体），或 `--agent` 纯后台
 4. 设置 → 其他 → 勾选开机自启（每座位各勾一次）
 
 ## 命令行
 
 ```
-AsterAudioRouter.exe --agent      后台运行（无窗口）
-AsterAudioRouter.exe --dry-run    试运行：只记录将执行的路由
-AsterAudioRouter.exe --status     查看配置/匹配规则/出声进程
-AsterAudioRouter.exe --install    写入本座位登录自启（HKCU Run）
-AsterAudioRouter.exe --uninstall  移除自启
-AsterAudioRouter.exe --reload     通知运行中的 agent 重新加载配置
+OYAAsterAudioMixer.exe --agent      后台运行（无窗口）
+OYAAsterAudioMixer.exe --dry-run    试运行：只记录将执行的路由
+OYAAsterAudioMixer.exe --status     查看配置/匹配规则/出声进程
+OYAAsterAudioMixer.exe --install    写入本座位登录自启（HKCU Run）
+OYAAsterAudioMixer.exe --uninstall  移除自启
+OYAAsterAudioMixer.exe --reload     通知运行中的 agent 重新加载配置
 ```
 
 配置热重载：改 `config.json` 保存即生效。手动覆盖：`%AppData%\AsterAudioRouter\overrides.json`。日志：`p1logs\`。

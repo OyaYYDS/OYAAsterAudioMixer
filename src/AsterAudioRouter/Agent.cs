@@ -35,7 +35,7 @@ public sealed class Agent : IDisposable
         _overrides = overrides;
         _overrides.Changed += () => Interlocked.Exchange(ref _overrideDirty, 1);
         _configPath = RouterConfig.FindConfigPath(exeDir);
-        _reloadEvent = new EventWaitHandle(false, EventResetMode.AutoReset, "AsterAudioRouterReload");
+        _reloadEvent = new EventWaitHandle(false, EventResetMode.AutoReset, "OYAAsterAudioMixerReload");
         try
         {
             var dir = Path.GetDirectoryName(_configPath);
