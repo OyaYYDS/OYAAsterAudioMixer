@@ -23,6 +23,7 @@
 7. **语言**：与用户沟通、项目内文档一律中文。
 8. **会话开场**：每次新会话先读 CLAUDE.md → PLAN.md → knowledge/。
 9. **底层 API 优先参考已有实现**：涉及 `IAudioPolicyConfigFactory` / `SetPersistedDefaultAudioEndpoint` / Core Audio COM interop 时，优先以 EarTrumpet 的实际实现为准；不得凭记忆自行猜测 COM 接口、GUID、vtable 顺序或参数含义。涉及 Windows 内部/未公开 API 的结论必须标记为 🟡/⚠️，直到 P0 实机验证。
+10. **提交署名（用户明确要求，2026-09-06）**：git 提交信息**禁止**加 `Co-Authored-By: Claude Code` 等 Claude 署名；GitHub 仓库的贡献者/署名只归用户本人（OyaYYDS）。
 
 ## 常用命令
 
